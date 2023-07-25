@@ -1,0 +1,19 @@
+<div class="lista" *ngFor="let lembretesKey of listaLembretes">
+  <h3 class="dia">Dia: {{ lembretesKey.date }}</h3>
+  <div class="lembrete" *ngFor="let lembrete of lembretesKey.lembrete">
+    <div class="col">
+      <label for="lembrete">
+        <h3>Lembrete: {{ lembrete.name }}</h3>
+      </label>
+    </div>
+    <div class="col">
+      <p-button
+        class="delete"
+        icon="pi pi-times"
+        styleClass="p-button-rounded p-button-danger"
+        (onClick)="deleteLembrete(lembrete.id)"
+        >X</p-button
+      >
+    </div>
+  </div>
+</div>

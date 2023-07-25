@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste DTI</title>
+  </head>
+  <body>
+    <header>
+      <h1>Sistema de Lembretes</h1>
+      <nav>
+        <ul>
+          <li><a href="">Página Inicial</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <form>
+        <h2>Cadastro de Lembretes</h2>
+        <app-cadastro-lembrete
+          (newItemEvent)="addItem($event)"
+        ></app-cadastro-lembrete>
+      </form>
+      <aside>
+        <h2>Listagem dos Lembretes:</h2>
+        <app-lista-lembrete
+          [listaLembretes]="listaLembretes"
+        ></app-lista-lembrete>
+      </aside>
+    </main>
+    <footer>
+      <p>
+        Desenvolvido por Arthur Lima Camargos -
+        <a href="https://github.com/arthur-lima-camargos" target="_blank">
+          GitHub
+        </a>
+      </p>
+    </footer>
+  </body>
+</html>

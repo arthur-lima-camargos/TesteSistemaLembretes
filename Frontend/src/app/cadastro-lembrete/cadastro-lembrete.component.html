@@ -1,0 +1,27 @@
+<section>
+  <form class="row" [formGroup]="cadastroForm" (submit)="applyCadastro()">
+    <div class="row">
+      <label for="date"><h3>Escolha uma Data:</h3></label>
+      <p-calendar
+        inputId="date"
+        dateFormat="dd/mm/yy"
+        formControlName="date"
+        [showIcon]="true"
+        [minDate]="minDate"
+      ></p-calendar>
+    </div>
+    <div class="row">
+      <label for="name"><h3>Escolha um Nome para o Lembrete:</h3></label>
+      <input type="text" formControlName="name" inputId="name" />
+    </div>
+    <div class="row" id="button">
+      <p-button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled]="cadastroForm.invalid"
+      >
+        Criar Lembrete
+      </p-button>
+    </div>
+  </form>
+</section>
