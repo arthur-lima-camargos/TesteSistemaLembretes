@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ListaLembreteComponent } from './lista-lembrete/lista-lembrete.component';
 import { TableModule } from 'primeng/table';
+import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { TableModule } from 'primeng/table';
     HttpClientModule,
     ReactiveFormsModule,
     TableModule,
+    NgxBootstrapIconsModule.pick(allIcons),
   ],
   providers: [LembreteService, HttpClient, DatePipe, ListaLembreteComponent],
   bootstrap: [AppComponent],

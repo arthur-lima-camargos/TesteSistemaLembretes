@@ -1,19 +1,29 @@
-<div class="lista" *ngFor="let lembretesKey of listaLembretes">
-  <h3 class="dia">Dia: {{ lembretesKey.date }}</h3>
-  <div class="lembrete" *ngFor="let lembrete of lembretesKey.lembrete">
-    <div class="col">
-      <label for="lembrete">
-        <h3>Lembrete: {{ lembrete.name }}</h3>
-      </label>
-    </div>
-    <div class="col">
-      <p-button
-        class="delete"
-        icon="pi pi-times"
-        styleClass="p-button-rounded p-button-danger"
-        (onClick)="deleteLembrete(lembrete.id)"
-        >X</p-button
-      >
+<div
+  class="p-3 mb-2 bg-secondary-subtle text-emphasis-secondary rounded border border-success p-2 mb-2 border-opacity-25"
+>
+  <div class="card">
+    <div class="card-header"><h2>Listagem de Lembretes</h2></div>
+    <div class="card-body">
+      <div class="table-responsive" *ngFor="let lembretesKey of listaLembretes">
+        <strong class="fs-5">Dia: {{ lembretesKey.date }}</strong>
+        <table class="table table-striped">
+          <tbody>
+            <tr *ngFor="let lembrete of lembretesKey.lembrete">
+              <td class="fs-5">Lembrete: {{ lembrete.name }}</td>
+              <td>
+                <button
+                  class="btn btn-danger btn-rounded float-end"
+                  (click)="deleteLembrete(lembrete.id)"
+                >
+                  <i-bs name="x-circle-fill"> </i-bs>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+      </div>
     </div>
   </div>
 </div>
+<br />

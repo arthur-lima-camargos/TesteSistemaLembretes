@@ -14,12 +14,12 @@ export class LembreteService {
   constructor(private http: HttpClient) {}
 
   createLembrete(lembrete: Lembrete): Observable<any> {
-    return this.http.post(`http://localhost:8080/api/lembretes`, lembrete);
+    return this.http.post(`https://localhost:7106/api/lembretes`, lembrete);
   }
   getLembrete(): Observable<any> {
-    return this.http.get('http://localhost:8080/api/lembretes');
+    return this.http.get('https://localhost:7106/api/lembretes');
   }
   deleteLembreteById(id: any): Observable<any> {
-    return this.http.delete(`http://localhost:8080/api/lembretes/` + id);
+    return this.http.delete(`https://localhost:7106/api/lembretes/` + id);
   }
 }

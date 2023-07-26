@@ -1,27 +1,41 @@
 <section>
-  <form class="row" [formGroup]="cadastroForm" (submit)="applyCadastro()">
-    <div class="row">
-      <label for="date"><h3>Escolha uma Data:</h3></label>
-      <p-calendar
-        inputId="date"
-        dateFormat="dd/mm/yy"
-        formControlName="date"
-        [showIcon]="true"
-        [minDate]="minDate"
-      ></p-calendar>
+  <div class="card p-3 mb-2 bg-secondary-subtle text-emphasis-secondary">
+    <div class="card-header">
+      <h2>Cadastro de Lembretes</h2>
     </div>
-    <div class="row">
-      <label for="name"><h3>Escolha um Nome para o Lembrete:</h3></label>
-      <input type="text" formControlName="name" inputId="name" />
+    <div class="card-body">
+      <form class="row" [formGroup]="cadastroForm" (submit)="applyCadastro()">
+        <div class="mb-3 d-flex flex-column">
+          <label for="date" class="form-label fs-5">Escolha uma Data:</label>
+          <p-calendar
+            inputId="date"
+            dateFormat="dd/mm/yy"
+            formControlName="date"
+            [showIcon]="true"
+            [minDate]="minDate"
+          ></p-calendar>
+        </div>
+        <div>
+          <label for="name" class="form-label fs-5"
+            >Escolha um Nome para o Lembrete:</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            inputId="name"
+          />
+        </div>
+        <div id="button">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block"
+            [disabled]="cadastroForm.invalid"
+          >
+            Criar Lembrete
+          </button>
+        </div>
+      </form>
     </div>
-    <div class="row" id="button">
-      <p-button
-        type="submit"
-        class="btn btn-primary btn-block"
-        [disabled]="cadastroForm.invalid"
-      >
-        Criar Lembrete
-      </p-button>
-    </div>
-  </form>
+  </div>
 </section>

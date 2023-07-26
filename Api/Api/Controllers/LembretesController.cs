@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Api.Models;
 using Api.DbContexts;
 using Api.Base;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Controllers
 {
@@ -17,7 +18,7 @@ namespace Api.Controllers
     {
         private readonly LembreteContext _context;
 
-        public LembretesController(LembreteContext context): base(context)
+        public LembretesController(LembreteContext context) : base(context)
         {
             _context = context;
         }
@@ -26,46 +27,46 @@ namespace Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Lembrete>> GetLembretes()
         {
-          if (_context.Lembretes == null)
-          {
-              return NotFound();
-          }
-            return new JsonResult(this.GetAll());
+            if (_context.Lembretes == null)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(this.GetAll().GroupBy(x => DateTime.ParseExact(x.Date, "dd/MM/yyyy", null))
+                                  .OrderBy(g => g.Key).ToDictionary(g => g.Key.ToString("dd/MM/yyyy"), g => g.ToList()));
         }
 
         // GET: api/Lembretes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Lembrete>> GetLembrete(Guid? id)
+        public ActionResult<Lembrete> GetLembrete(string? id)
         {
-          if (_context.Lembretes == null)
-          {
-              return NotFound();
-          }
-            var lembrete = await _context.Lembretes.FindAsync(id);
+            if (_context.Lembretes == null)
+            {
+                return NotFound();
+            }
+            var lembrete = this.Get(id);
 
             if (lembrete == null)
             {
                 return NotFound();
             }
 
-            return lembrete;
+            return new JsonResult(this.Get(id));
         }
 
         // PUT: api/Lembretes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLembrete(Guid? id, Lembrete lembrete)
+        public IActionResult PutLembrete(string? id, Lembrete lembrete)
         {
             if (id != lembrete.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(lembrete).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                this.Insert(lembrete);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -85,39 +86,40 @@ namespace Api.Controllers
         // POST: api/Lembretes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Lembrete>> PostLembrete(Lembrete lembrete)
+        public IActionResult PostLembrete(Lembrete lembrete)
         {
-          if (_context.Lembretes == null)
-          {
-              return Problem("Entity set 'LembreteContext.Lembretes'  is null.");
-          }
-            _context.Lembretes.Add(lembrete);
-            await _context.SaveChangesAsync();
+            if (_context.Lembretes == null)
+            {
+                return Problem("Entity set 'LembreteContext.Lembretes'  is null.");
+            }
 
-            return CreatedAtAction(nameof(GetLembrete), new { id = lembrete.Id }, lembrete);
+            lembrete.Id = Guid.NewGuid().ToString();
+            this.Insert(lembrete);
+
+            return Ok();
         }
 
         // DELETE: api/Lembretes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLembrete(Guid? id)
+        public IActionResult DeleteLembrete(string? id)
         {
             if (_context.Lembretes == null)
             {
                 return NotFound();
             }
-            var lembrete = await _context.Lembretes.FindAsync(id);
+            var lembrete = this.Get(id);
             if (lembrete == null)
             {
                 return NotFound();
             }
 
-            _context.Lembretes.Remove(lembrete);
-            await _context.SaveChangesAsync();
+            this.Delete(id);
 
-            return NoContent();
+            return Ok();
         }
 
-        private bool LembreteExists(Guid? id)
+        [HttpGet("lembreteExists/{id}")]
+        public bool LembreteExists(string? id)
         {
             return (_context.Lembretes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
