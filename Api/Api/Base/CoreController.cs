@@ -1,10 +1,9 @@
 ﻿using Api.DbContexts;
-using Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Base
 {
-    public abstract class CoreController<TModel> : ControllerBase, IController<TModel>  where TModel : class
+    public abstract class CoreController<TModel> : ControllerBase where TModel : class
     {
         protected readonly LembreteContext _context;
 
